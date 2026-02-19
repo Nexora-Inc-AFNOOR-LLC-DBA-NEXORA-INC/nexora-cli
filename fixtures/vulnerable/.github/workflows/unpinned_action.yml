@@ -1,0 +1,11 @@
+# expected_rules: NXR-GH-002
+# expected_max_severity: HIGH
+# description: Workflow using actions pinned to tags instead of commit SHAs
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: echo "building"

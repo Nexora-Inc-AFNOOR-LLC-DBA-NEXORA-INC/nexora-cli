@@ -1,0 +1,11 @@
+# expected_rules: NXR-K8S-004
+# expected_max_severity: HIGH
+# description: ClusterRole with wildcard verbs on secrets
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: bad-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["*"]

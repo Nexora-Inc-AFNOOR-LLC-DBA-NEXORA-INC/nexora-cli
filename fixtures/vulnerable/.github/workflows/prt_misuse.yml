@@ -1,0 +1,13 @@
+# expected_rules: NXR-GH-003,NXR-GH-006
+# expected_max_severity: CRITICAL
+# description: pull_request_target with PR head checkout and token reference
+on:
+  pull_request_target:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - run: echo ${{ github.token }}

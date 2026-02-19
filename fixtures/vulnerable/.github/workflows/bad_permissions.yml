@@ -1,0 +1,11 @@
+# expected_rules: NXR-GH-001
+# expected_max_severity: HIGH
+# description: Workflow with broad write-all permissions and no job-level scoping
+on: push
+permissions: write-all
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - run: echo "building"

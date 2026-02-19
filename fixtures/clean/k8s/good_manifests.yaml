@@ -1,0 +1,30 @@
+# expected_rules: []
+# expected_max_severity: none
+# description: Well-configured Kubernetes manifests with dedicated SA and automount disabled
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-sa
+  namespace: production
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      serviceAccountName: app-sa
+      automountServiceAccountToken: false
+      containers:
+        - name: app
+          image: nginx:1.25.3
