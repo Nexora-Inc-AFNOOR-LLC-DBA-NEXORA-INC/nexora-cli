@@ -16,7 +16,7 @@ func TestRedactGHTokens(t *testing.T) {
 		{"token: ghs_" + repeat("A", 36), "token: [REDACTED:GH_TOKEN_SERVER]"},
 		{"token: ghr_" + repeat("A", 36), "token: [REDACTED:GH_TOKEN_REFRESH]"},
 		{"key: AKIAIOSFODNN7EXAMPLE", "key: [REDACTED:AWS_ACCESS_KEY_ID]"},
-		{"-----BEGIN RSA PRIVATE KEY-----", "[REDACTED:PEM_PRIVATE_KEY]"},
+		{"-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA\n-----END RSA PRIVATE KEY-----", "[REDACTED:PEM_PRIVATE_KEY]"},
 	}
 	for _, tc := range cases {
 		assert.Equal(t, tc.want, String(tc.input))
@@ -55,7 +55,7 @@ func TestRedactBytes(t *testing.T) {
 }
 
 func TestHasSecret_PEM(t *testing.T) {
-	assert.True(t, HasSecret("-----BEGIN RSA PRIVATE KEY-----"))
+	assert.True(t, HasSecret("-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA\n-----END RSA PRIVATE KEY-----"))
 }
 
 func TestHasSecret_GHToken(t *testing.T) {

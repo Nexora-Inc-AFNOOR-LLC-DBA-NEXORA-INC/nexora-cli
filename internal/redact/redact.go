@@ -15,7 +15,7 @@ var patterns = []pattern{
 	{"GH_FINE_GRAINED_PAT", regexp.MustCompile(`github_pat_[A-Za-z0-9_]{82}`)},
 	{"AWS_ACCESS_KEY_ID", regexp.MustCompile(`AKIA[0-9A-Z]{16}`)},
 	{"AWS_SECRET_KEY", regexp.MustCompile(`(?i)(aws_secret_access_key\s*=\s*"?)[A-Za-z0-9/+=]{40}"?`)},
-	{"PEM_PRIVATE_KEY", regexp.MustCompile(`-----BEGIN [A-Z ]*PRIVATE KEY-----`)},
+	{"PEM_PRIVATE_KEY", regexp.MustCompile(`(?s)-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----`)},
 }
 
 func String(s string) string {

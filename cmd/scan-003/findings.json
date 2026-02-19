@@ -1,0 +1,22 @@
+{
+  "scan_id": "fc0a10d0-12ce-4a9a-9017-3b556a3974e7",
+  "scan_timestamp_utc": "2026-02-19T20:13:22Z",
+  "version": "dev",
+  "total_findings": 1,
+  "findings": [
+    {
+      "rule_id": "NXR-IAC-001",
+      "severity": 4,
+      "title": "IAM wildcard",
+      "description": "",
+      "nhi_context": "",
+      "file_path": "main.tf",
+      "line_start": 3,
+      "line_end": 0,
+      "evidence": "",
+      "fix": "",
+      "references": null,
+      "fingerprint": ""
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "scan_id": "fc0a10d0-12ce-4a9a-9017-3b556a3974e7",
+  "scan_timestamp_utc": "2026-02-19T20:13:22Z",
+  "files": [
+    {
+      "name": "findings.json",
+      "sha256": "35a0abe0eebd831a96ccf9449ca662c7973ab555c7e24336388a947f05c39b6a",
+      "sha512": "241f3e8ad1d29dedb95afcb4317dc9eef32c89faca631696a9616983542e768b19d42c889c59a50010b3c8ae707c1d9e6daa9dd231da589e3e5690c6689243a8"
+    },
+    {
+      "name": "findings.sarif",
+      "sha256": "1d44f81c630e8d607373b2622c8b8775f6e6d8fbcf31836423e7dd7784bcdf6e",
+      "sha512": "70b1f98a5e0ef38c9b9440976a277e2374d38d5dacd09054eee371ea0fcc89eb676caeb9898a5e64d1b0f55b9de4a2ca6bddeb6350e5997327e9dd23c63e4497"
+    },
+    {
+      "name": "findings.ocsf.jsonl",
+      "sha256": "f2217537a39fa7516f88cfcdc4d4b2af308fa721b1d2c7b5de0b21884d6ddc4f",
+      "sha512": "4a11a21749e571f0b2cdbdd94d39b334f79086eb27d1c08d1a8f34ae09eb01e586b31c23a8784ab72d64e1e38d498b34bf10726be548ec7cb6f821c7ad4eafeb"
+    },
+    {
+      "name": "scan-metadata.json",
+      "sha256": "0309cc8700ce9509868436dc9a8f6481607c26fe991dc8750202cfff49918f2b",
+      "sha512": "c2fc3f8edfb11f000b29384e9ad78b5ddace889e712afd6af2169acef93cf37e60db65d05c0a42553f10a699f8717514e3505933c44d783d89a7fad161096a61"
+    }
+  ],
+  "files_root_hash": "1739ed3f64d2e46214495c199ca5771a9642e6a023038217ad80a6f9d26a8c08"
+}

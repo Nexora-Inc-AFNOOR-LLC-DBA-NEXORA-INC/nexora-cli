@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "nexora-cli",
+          "version": "dev",
+          "informationUri": "https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli",
+          "rules": [
+            {
+              "id": "NXR-IAC-001",
+              "name": "NXRIAC001",
+              "shortDescription": {
+                "text": "IAM wildcard"
+              },
+              "properties": {
+                "severity": "CRITICAL"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "NXR-IAC-001",
+          "level": "error",
+          "message": {
+            "text": ""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "main.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3,
+                  "endLine": 3
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

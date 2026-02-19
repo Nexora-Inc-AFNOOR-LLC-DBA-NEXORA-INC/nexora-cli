@@ -1,0 +1,1 @@
+{"class_uid":2001,"category_uid":2,"activity_id":1,"type_uid":200101,"time":1771532002250,"severity":"HIGH","severity_id":4,"status":"New","finding_info":{"uid":"","title":"Test finding","desc":"","types":["NXR-GH-001"]},"resources":[{"name":"test.yml","type":"File"}],"metadata":{"product":{"name":"nexora-cli","version":"dev"},"version":"1.1.0"}}

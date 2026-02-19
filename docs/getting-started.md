@@ -20,10 +20,10 @@ nexora version
 
 ## First Scan in 10 Minutes
 
-### Scan GitHub Actions workflows (local)
+### Scan GitHub Actions workflows (local, no token required)
 
 ```sh
-nexora scan k8s --path ./.github/workflows/
+nexora scan workflows --path ./.github/workflows/
 ```
 
 ### Scan Kubernetes manifests
@@ -72,8 +72,10 @@ jobs:
         run: |
           curl -sSfL https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/releases/latest/download/nexora_Linux_x86_64.tar.gz | tar xz
           sudo mv nexora /usr/local/bin/
-      - name: Scan
-        run: nexora scan k8s --path ./k8s/ --format sarif --output nexora.sarif
+      - name: Scan workflows
+        run: nexora scan workflows --path ./.github/workflows/ --format sarif --output nexora.sarif
+      - name: Scan Kubernetes
+        run: nexora scan k8s --path ./k8s/ --format sarif --output k8s.sarif
       - name: Upload SARIF
         uses: github/codeql-action/upload-sarif@v3
         with:

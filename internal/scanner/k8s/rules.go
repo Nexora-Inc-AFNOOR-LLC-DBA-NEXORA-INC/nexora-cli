@@ -62,56 +62,77 @@ func CheckAutomountServiceAccountToken(doc *yaml.Node, filePath string) ([]findi
 	}
 
 	kind := scalarValue(root, "kind")
+
+	// For ServiceAccount objects: always check — these are the identity objects themselves.
+	if kind == "ServiceAccount" {
+		automount := mappingValue(root, "automountServiceAccountToken")
+		if automount != nil && automount.Value == "false" {
+			return findings, nil
+		}
+		name := scalarValue(mappingValue(root, "metadata"), "name")
+		lineNum := root.Line
+		if automount != nil {
+			lineNum = automount.Line
+		}
+		f := finding.Finding{
+			RuleID:      "NXR-K8S-002",
+			Severity:    finding.SeverityInfo,
+			Title:       "ServiceAccount token automount not explicitly disabled",
+			Description: fmt.Sprintf("ServiceAccount %q does not set automountServiceAccountToken: false.", name),
+			NHIContext:  "Automatically mounted tokens grant API access to any process using this SA; disable if not needed.",
+			FilePath:    filePath,
+			LineStart:   lineNum,
+			LineEnd:     lineNum,
+			Evidence:    fmt.Sprintf("kind: ServiceAccount, name: %s", name),
+			Fix:         "Set automountServiceAccountToken: false on the ServiceAccount.",
+			References:  []string{"https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#opt-out-of-api-credential-automounting"},
+		}
+		f.ComputeFingerprint()
+		findings = append(findings, f)
+		return findings, nil
+	}
+
+	// For workloads: only fire if a named non-default SA is explicitly referenced.
+	// Rationale: if the workload uses the default SA, NXR-K8S-003 covers it.
+	// If a dedicated SA is referenced but automount is not disabled, that SA
+	// was intentionally created and the omission is a real finding.
 	switch kind {
 	case "Pod", "Deployment", "StatefulSet", "DaemonSet", "Job", "CronJob", "ReplicaSet":
-	case "ServiceAccount":
 	default:
 		return findings, nil
 	}
 
-	checkNode := root
-	if kind != "Pod" && kind != "ServiceAccount" {
-		spec := mappingValue(root, "spec")
-		if spec != nil {
-			template := mappingValue(spec, "template")
-			if template != nil {
-				podSpec := mappingValue(template, "spec")
-				if podSpec != nil {
-					checkNode = podSpec
-				}
-			}
-		}
-	} else if kind == "Pod" {
-		spec := mappingValue(root, "spec")
-		if spec != nil {
-			checkNode = spec
-		}
+	podSpec := resolvePodSpec(root, kind)
+	if podSpec == nil {
+		return findings, nil
 	}
 
-	automount := mappingValue(checkNode, "automountServiceAccountToken")
+	saNode := mappingValue(podSpec, "serviceAccountName")
+	if saNode == nil || saNode.Value == "" || saNode.Value == "default" {
+		return findings, nil
+	}
+
+	automount := mappingValue(podSpec, "automountServiceAccountToken")
 	if automount != nil && automount.Value == "false" {
 		return findings, nil
 	}
 
-	lineNum := 0
+	lineNum := saNode.Line
 	if automount != nil {
 		lineNum = automount.Line
-	} else if checkNode != nil {
-		lineNum = checkNode.Line
 	}
-
 	name := scalarValue(mappingValue(root, "metadata"), "name")
 	f := finding.Finding{
 		RuleID:      "NXR-K8S-002",
 		Severity:    finding.SeverityInfo,
 		Title:       "ServiceAccount token automount not explicitly disabled",
-		Description: fmt.Sprintf("%s %q does not explicitly set automountServiceAccountToken: false.", kind, name),
+		Description: fmt.Sprintf("%s %q uses SA %q but does not set automountServiceAccountToken: false.", kind, name, saNode.Value),
 		NHIContext:  "Automatically mounted tokens grant API access to any process in the pod; disable if not needed.",
 		FilePath:    filePath,
 		LineStart:   lineNum,
 		LineEnd:     lineNum,
-		Evidence:    fmt.Sprintf("kind: %s, name: %s", kind, name),
-		Fix:         "Set automountServiceAccountToken: false on the PodSpec or ServiceAccount where API access is not required.",
+		Evidence:    fmt.Sprintf("kind: %s, name: %s, serviceAccountName: %s", kind, name, saNode.Value),
+		Fix:         "Set automountServiceAccountToken: false on the PodSpec or the referenced ServiceAccount.",
 		References:  []string{"https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#opt-out-of-api-credential-automounting"},
 	}
 	f.ComputeFingerprint()

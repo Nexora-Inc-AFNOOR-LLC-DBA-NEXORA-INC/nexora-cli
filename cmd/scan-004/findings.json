@@ -1,0 +1,22 @@
+{
+  "scan_id": "7941ca8e-ecdd-4ceb-a6d8-e6f129fa792b",
+  "scan_timestamp_utc": "2026-02-19T20:13:22Z",
+  "version": "dev",
+  "total_findings": 1,
+  "findings": [
+    {
+      "rule_id": "NXR-IAC-002",
+      "severity": 4,
+      "title": "Hardcoded key",
+      "description": "",
+      "nhi_context": "",
+      "file_path": "main.tf",
+      "line_start": 0,
+      "line_end": 0,
+      "evidence": "",
+      "fix": "",
+      "references": null,
+      "fingerprint": ""
+    }
+  ]
+}

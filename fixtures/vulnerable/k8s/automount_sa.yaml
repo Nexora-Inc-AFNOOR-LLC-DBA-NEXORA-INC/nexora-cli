@@ -1,12 +1,8 @@
-# expected_rules: NXR-K8S-002,NXR-K8S-003
+# expected_rules: NXR-K8S-002
 # expected_max_severity: INFO
-# description: Pod without automountServiceAccountToken disabled and using default SA
+# description: ServiceAccount without automountServiceAccountToken explicitly disabled
 apiVersion: v1
-kind: Pod
+kind: ServiceAccount
 metadata:
-  name: app-pod
+  name: app-sa
   namespace: default
-spec:
-  containers:
-    - name: app
-      image: nginx:latest

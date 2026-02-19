@@ -39,8 +39,8 @@ go install github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli@latest
 ## Quick Start
 
 ```sh
-# Scan GitHub Actions workflows
-nexora scan k8s --path ./path/to/manifests
+# Scan local GitHub Actions workflow files (no token required)
+nexora scan workflows --path ./.github/workflows/
 
 # Scan Kubernetes manifests
 nexora scan k8s --path ./k8s/
@@ -54,7 +54,8 @@ nexora scan github --org my-org --token $GITHUB_TOKEN
 # Output as SARIF
 nexora scan k8s --path ./k8s/ --format sarif --output findings.sarif
 
-# Generate evidence bundle
+# Generate evidence bundle directly from scan
+nexora scan k8s --path ./k8s/ --format json --output findings.json
 nexora report --input findings.json --bundle ./evidence-bundle/
 
 # Verify bundle integrity
@@ -122,14 +123,16 @@ Bundles contain `findings.json`, `findings.sarif`, `findings.ocsf.jsonl`, `scan-
 ## GitHub Actions Integration
 
 ```yaml
-- name: Scan workflows
-  run: |
-    nexora scan k8s --path ./k8s/ --format sarif --output nexora.sarif
-    
+- name: Scan workflows (local, no token)
+  run: nexora scan workflows --path ./.github/workflows/ --format sarif --output workflows.sarif
+
+- name: Scan Kubernetes manifests
+  run: nexora scan k8s --path ./k8s/ --format sarif --output k8s.sarif
+
 - name: Upload SARIF
   uses: github/codeql-action/upload-sarif@v3
   with:
-    sarif_file: nexora.sarif
+    sarif_file: workflows.sarif
 ```
 
 ## Development

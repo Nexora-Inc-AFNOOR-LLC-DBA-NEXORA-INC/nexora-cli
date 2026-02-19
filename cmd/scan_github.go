@@ -2,24 +2,27 @@ package cmd
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
+	"strings"
 
-	gogithub "github.com/google/go-github/v60/github"
 	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
 	ghscanner "github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/scanner/github"
+	gogithub "github.com/google/go-github/v60/github"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 	"golang.org/x/oauth2"
 )
 
 var (
-	ghOrg      string
-	ghRepo     string
-	ghToken    string
-	ghFormat   string
-	ghOutput   string
-	ghSeverity string
+	ghOrg       string
+	ghRepo      string
+	ghToken     string
+	ghFormat    string
+	ghOutput    string
+	ghSeverity  string
+	ghBundle    string
 	ghThreshold finding.Severity
 )
 
@@ -89,6 +92,10 @@ This is the ONLY command that makes network calls.`,
 
 			_, dirContents, _, err := client.Repositories.GetContents(ctx, owner, repoName, ".github/workflows", nil)
 			if err != nil {
+				var rle *gogithub.RateLimitError
+				if errors.As(err, &rle) {
+					return fmt.Errorf("GitHub API rate limit exceeded: resets at %s", rle.Rate.Reset.Time)
+				}
 				log.Warn().Err(err).Str("repo", repoFullName).Msg("cannot list workflows, skipping")
 				continue
 			}
@@ -98,11 +105,7 @@ This is the ONLY command that makes network calls.`,
 					continue
 				}
 				name := item.GetName()
-				if len(name) < 4 {
-					continue
-				}
-				ext := name[len(name)-4:]
-				if ext != ".yml" && name[len(name)-5:] != ".yaml" {
+				if !strings.HasSuffix(name, ".yml") && !strings.HasSuffix(name, ".yaml") {
 					continue
 				}
 
@@ -131,7 +134,7 @@ This is the ONLY command that makes network calls.`,
 		finding.Sort(allFindings)
 		filtered := finding.Filter(allFindings, ghThreshold)
 
-		if err := writeFindings(cmd, filtered, ghFormat, ghOutput, ""); err != nil {
+		if err := writeFindings(cmd, filtered, ghFormat, ghOutput, ghBundle); err != nil {
 			return err
 		}
 
@@ -159,4 +162,5 @@ func init() {
 	scanGitHubCmd.Flags().StringVar(&ghFormat, "format", "table", "output format: table|json|sarif|ocsf")
 	scanGitHubCmd.Flags().StringVar(&ghOutput, "output", "", "write output to file (default: stdout)")
 	scanGitHubCmd.Flags().StringVar(&ghSeverity, "severity", "info", "minimum severity threshold: info|low|medium|high|critical")
+	scanGitHubCmd.Flags().StringVar(&ghBundle, "bundle", "", "create integrity-checked evidence bundle in this directory")
 }

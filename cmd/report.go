@@ -6,11 +6,11 @@ import (
 	"io"
 	"os"
 
-	"github.com/google/uuid"
 	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/bundle"
 	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
 	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/output"
 	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/version"
+	"github.com/google/uuid"
 	"github.com/spf13/cobra"
 )
 
@@ -51,10 +51,6 @@ Example:
 		}
 
 		findings := jsonReport.Findings
-		scanID := jsonReport.ScanID
-		if scanID == "" {
-			scanID = uuid.New().String()
-		}
 
 		if reportSeverity != "" {
 			threshold, err := parseSeverityFlag(reportSeverity)
@@ -64,11 +60,7 @@ Example:
 			findings = finding.Filter(findings, threshold)
 		}
 
-		if reportBundle != "" {
-			return bundle.Write(reportBundle, scanID, version.Version, findings)
-		}
-
-		return writeFindings(cmd, findings, reportFormat, reportOutput, scanID)
+		return writeFindings(cmd, findings, reportFormat, reportOutput, reportBundle)
 	},
 }
 
@@ -81,7 +73,13 @@ func init() {
 	reportCmd.Flags().StringVar(&reportSeverity, "severity", "", "filter to minimum severity: info|low|medium|high|critical")
 }
 
-func writeFindings(cmd *cobra.Command, findings []finding.Finding, format, outputPath, scanID string) error {
+func writeFindings(cmd *cobra.Command, findings []finding.Finding, format, outputPath, bundlePath string) error {
+	scanID := uuid.New().String()
+
+	if bundlePath != "" {
+		return bundle.Write(bundlePath, scanID, version.Version, findings)
+	}
+
 	var w io.Writer
 	if outputPath != "" {
 		f, err := os.Create(outputPath)
@@ -92,10 +90,6 @@ func writeFindings(cmd *cobra.Command, findings []finding.Finding, format, outpu
 		w = f
 	} else {
 		w = cmd.OutOrStdout()
-	}
-
-	if scanID == "" {
-		scanID = uuid.New().String()
 	}
 
 	switch format {

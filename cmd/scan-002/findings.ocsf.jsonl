@@ -1,0 +1,1 @@
+{"class_uid":2001,"category_uid":2,"activity_id":1,"type_uid":200101,"time":1771532002408,"severity":"CRITICAL","severity_id":5,"status":"New","finding_info":{"uid":"","title":"Cluster admin binding","desc":"","types":["NXR-K8S-001"]},"resources":[{"name":"binding.yaml","type":"File"}],"metadata":{"product":{"name":"nexora-cli","version":"dev"},"version":"1.1.0"}}

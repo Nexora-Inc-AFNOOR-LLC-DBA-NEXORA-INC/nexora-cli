@@ -158,28 +158,37 @@ func CheckPRTMisuse(node *yaml.Node, filePath string) ([]finding.Finding, error)
 
 func CheckHardcodedSecrets(node *yaml.Node, filePath string) ([]finding.Finding, error) {
 	var findings []finding.Finding
-	visitEnvValues(node, func(key, value string, line int) {
+
+	checkKV := func(key, value string, line int, context string) {
 		if strings.HasPrefix(value, "${{") {
 			return
 		}
-		if redact.HasSecret(value) {
-			redacted := redact.String(value)
-			f := finding.Finding{
-				RuleID:      "NXR-GH-004",
-				Severity:    finding.SeverityCritical,
-				Title:       "Hardcoded credential in workflow env",
-				Description: fmt.Sprintf("Environment variable %q contains a hardcoded credential.", key),
-				NHIContext:  "Hardcoded machine credentials become persistent breach paths via repo history and logs.",
-				FilePath:    filePath,
-				LineStart:   line,
-				LineEnd:     line,
-				Evidence:    fmt.Sprintf("%s: %s", key, redacted),
-				Fix:         "Move to GitHub Secrets and reference via ${{ secrets.NAME }}.",
-				References:  []string{"https://docs.github.com/en/actions/security-guides/encrypted-secrets"},
-			}
-			f.ComputeFingerprint()
-			findings = append(findings, f)
+		if !redact.HasSecret(value) {
+			return
 		}
+		redacted := redact.String(value)
+		f := finding.Finding{
+			RuleID:      "NXR-GH-004",
+			Severity:    finding.SeverityCritical,
+			Title:       "Hardcoded credential in workflow " + context,
+			Description: fmt.Sprintf("Workflow %s key %q contains a hardcoded credential.", context, key),
+			NHIContext:  "Hardcoded machine credentials become persistent breach paths via repo history and logs.",
+			FilePath:    filePath,
+			LineStart:   line,
+			LineEnd:     line,
+			Evidence:    fmt.Sprintf("%s: %s", key, redacted),
+			Fix:         "Move to GitHub Secrets and reference via ${{ secrets.NAME }}.",
+			References:  []string{"https://docs.github.com/en/actions/security-guides/encrypted-secrets"},
+		}
+		f.ComputeFingerprint()
+		findings = append(findings, f)
+	}
+
+	visitEnvValues(node, func(key, value string, line int) {
+		checkKV(key, value, line, "env")
+	})
+	visitWithValues(node, func(key, value string, line int) {
+		checkKV(key, value, line, "with")
 	})
 	return findings, nil
 }
@@ -435,6 +444,33 @@ func visitEnvNode(envNode *yaml.Node, fn func(key, value string, line int)) {
 	}
 	for i := 0; i+1 < len(envNode.Content); i += 2 {
 		fn(envNode.Content[i].Value, envNode.Content[i+1].Value, envNode.Content[i+1].Line)
+	}
+}
+
+func visitWithValues(doc *yaml.Node, fn func(key, value string, line int)) {
+	root := doc
+	if root.Kind == yaml.DocumentNode && len(root.Content) > 0 {
+		root = root.Content[0]
+	}
+	jobsNode := mappingValue(root, "jobs")
+	if jobsNode == nil {
+		return
+	}
+	for i := 1; i < len(jobsNode.Content); i += 2 {
+		jobBody := jobsNode.Content[i]
+		stepsNode := mappingValue(jobBody, "steps")
+		if stepsNode == nil || stepsNode.Kind != yaml.SequenceNode {
+			continue
+		}
+		for _, step := range stepsNode.Content {
+			withNode := mappingValue(step, "with")
+			if withNode == nil || withNode.Kind != yaml.MappingNode {
+				continue
+			}
+			for j := 0; j+1 < len(withNode.Content); j += 2 {
+				fn(withNode.Content[j].Value, withNode.Content[j+1].Value, withNode.Content[j+1].Line)
+			}
+		}
 	}
 }
 

@@ -66,7 +66,7 @@ func TestWriteFindings_TableToBuffer(t *testing.T) {
 	}
 
 	rootCmd.SetOut(&bytes.Buffer{})
-	err := writeFindings(rootCmd, findings, "table", "", "scan-001")
+	err := writeFindings(rootCmd, findings, "table", "", "")
 	assert.NoError(t, err)
 }
 
@@ -83,7 +83,7 @@ func TestWriteFindings_JSONToFile(t *testing.T) {
 	dir := t.TempDir()
 	outFile := filepath.Join(dir, "out.json")
 
-	err := writeFindings(rootCmd, findings, "json", outFile, "scan-002")
+	err := writeFindings(rootCmd, findings, "json", outFile, "")
 	require.NoError(t, err)
 
 	data, err := os.ReadFile(outFile)
@@ -91,7 +91,7 @@ func TestWriteFindings_JSONToFile(t *testing.T) {
 
 	var report map[string]interface{}
 	require.NoError(t, json.Unmarshal(data, &report))
-	assert.Equal(t, "scan-002", report["scan_id"])
+	assert.NotEmpty(t, report["scan_id"])
 	assert.EqualValues(t, 1, report["total_findings"])
 }
 
@@ -109,7 +109,7 @@ func TestWriteFindings_SARIFToFile(t *testing.T) {
 	dir := t.TempDir()
 	outFile := filepath.Join(dir, "out.sarif")
 
-	err := writeFindings(rootCmd, findings, "sarif", outFile, "scan-003")
+	err := writeFindings(rootCmd, findings, "sarif", outFile, "")
 	require.NoError(t, err)
 
 	data, err := os.ReadFile(outFile)
@@ -133,7 +133,7 @@ func TestWriteFindings_OCSFToFile(t *testing.T) {
 	dir := t.TempDir()
 	outFile := filepath.Join(dir, "out.jsonl")
 
-	err := writeFindings(rootCmd, findings, "ocsf", outFile, "scan-004")
+	err := writeFindings(rootCmd, findings, "ocsf", outFile, "")
 	require.NoError(t, err)
 
 	data, err := os.ReadFile(outFile)
