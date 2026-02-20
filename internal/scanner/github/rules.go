@@ -5,9 +5,10 @@ import (
 	"regexp"
 	"strings"
 
+	"gopkg.in/yaml.v3"
+
 	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
 	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/redact"
-	"gopkg.in/yaml.v3"
 )
 
 var reCommitSHA = regexp.MustCompile(`^[0-9a-f]{40}$`)

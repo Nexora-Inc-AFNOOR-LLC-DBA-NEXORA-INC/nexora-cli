@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
 	"gopkg.in/yaml.v3"
+
+	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
 )
 
 func CheckClusterAdminBinding(doc *yaml.Node, filePath string) ([]finding.Finding, error) {
