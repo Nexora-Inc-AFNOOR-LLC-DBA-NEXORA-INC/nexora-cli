@@ -51,26 +51,50 @@ func WriteTable(w io.Writer, findings []finding.Finding) error {
 	fmt.Fprintln(tw, strings.Repeat("-", 8)+"\t"+strings.Repeat("-", 10)+"\t"+strings.Repeat("-", 40)+"\t"+strings.Repeat("-", 4)+"\t"+strings.Repeat("-", 50))
 
 	counts := make(map[finding.Severity]int)
+	type row struct {
+		sev    string
+		ruleID string
+		file   string
+		line   string
+		title  string
+		nhiCtx string
+	}
+	rows := make([]row, 0, len(findings))
 	for _, f := range findings {
 		counts[f.Severity]++
-		line := "-"
+		lineStr := "-"
 		if f.LineStart > 0 {
-			line = fmt.Sprintf("%d", f.LineStart)
+			lineStr = fmt.Sprintf("%d", f.LineStart)
 		}
 		sev := f.Severity.String()
 		if color {
 			sev = severityColor(f.Severity) + sev + colorReset
 		}
-		fmt.Fprintf(tw, "%s\t%s\t%s\t%s\t%s\n",
-			sev,
-			f.RuleID,
-			truncate(f.FilePath, 40),
-			line,
-			truncate(f.Title, 50),
-		)
+		rows = append(rows, row{
+			sev:    sev,
+			ruleID: f.RuleID,
+			file:   truncate(f.FilePath, 40),
+			line:   lineStr,
+			title:  truncate(f.Title, 50),
+			nhiCtx: f.NHIContext,
+		})
+	}
+
+	for _, r := range rows {
+		fmt.Fprintf(tw, "%s\t%s\t%s\t%s\t%s\n", r.sev, r.ruleID, r.file, r.line, r.title)
 	}
 	if err := tw.Flush(); err != nil {
 		return err
+	}
+
+	nhiPrefix := "  \u2514 NHI: "
+	if color {
+		nhiPrefix = colorGray + nhiPrefix + colorReset
+	}
+	for _, r := range rows {
+		if r.nhiCtx != "" {
+			fmt.Fprintf(w, "%s%s\n", nhiPrefix, truncate(r.nhiCtx, 100))
+		}
 	}
 
 	total := len(findings)
