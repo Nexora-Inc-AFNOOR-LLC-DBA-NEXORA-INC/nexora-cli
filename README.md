@@ -174,6 +174,12 @@ Findings show up as PR annotations in GitHub Code Scanning automatically.
 
 ---
 
+## Research
+
+[CI/CD Machine Identity Risk: Findings from 18 Open-Source Repos →](docs/research/ci-cd-nhi-scan-2026.md)
+
+---
+
 ## Contributing
 
 ```sh
