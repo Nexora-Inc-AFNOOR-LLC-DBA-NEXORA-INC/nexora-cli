@@ -8,7 +8,7 @@ import (
 
 	"github.com/rs/zerolog/log"
 
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
+	"github.com/Nexora-NHI/nexora-cli/internal/finding"
 )
 
 const maxFileSize = 10 * 1024 * 1024

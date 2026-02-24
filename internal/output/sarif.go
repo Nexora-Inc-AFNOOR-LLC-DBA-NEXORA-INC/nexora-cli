@@ -8,8 +8,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/redact"
+	"github.com/Nexora-NHI/nexora-cli/internal/finding"
+	"github.com/Nexora-NHI/nexora-cli/internal/redact"
 )
 
 var reAbsoluteURI = regexp.MustCompile(`^(?:[A-Za-z]:[\\/]|/)`)
@@ -151,7 +151,7 @@ func WriteSARIF(w io.Writer, toolVersion string, findings []finding.Finding) err
 					Driver: sarifDriver{
 						Name:           "nexora-cli",
 						Version:        toolVersion,
-						InformationURI: "https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli",
+						InformationURI: "https://github.com/Nexora-NHI/nexora-cli",
 						Rules:          rules,
 					},
 				},

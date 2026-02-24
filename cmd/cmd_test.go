@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
+	"github.com/Nexora-NHI/nexora-cli/internal/finding"
 )
 
 // --- parseSeverityFlag ---

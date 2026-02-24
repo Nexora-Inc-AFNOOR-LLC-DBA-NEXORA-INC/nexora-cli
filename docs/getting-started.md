@@ -3,13 +3,13 @@
 ## Prerequisites
 
 - Go 1.22+ (for building from source)
-- Or download a pre-built binary from [Releases](https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/releases)
+- Or download a pre-built binary from [Releases](https://github.com/Nexora-NHI/nexora-cli/releases)
 
 ## Install
 
 ```sh
 # From source
-git clone https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli.git
+git clone https://github.com/Nexora-NHI/nexora-cli.git
 cd nexora-cli
 make build
 sudo mv nexora /usr/local/bin/
@@ -70,7 +70,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install nexora-cli
         run: |
-          curl -sSfL https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/releases/latest/download/nexora_Linux_x86_64.tar.gz | tar xz
+          curl -sSfL https://github.com/Nexora-NHI/nexora-cli/releases/latest/download/nexora_Linux_x86_64.tar.gz | tar xz
           sudo mv nexora /usr/local/bin/
       - name: Scan workflows
         run: nexora scan workflows --path ./.github/workflows/ --format sarif --output nexora.sarif

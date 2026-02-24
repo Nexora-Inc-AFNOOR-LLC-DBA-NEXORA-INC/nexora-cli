@@ -19,9 +19,9 @@ builds:
       - arm64
     ldflags:
       - -s -w
-      - -X github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/version.Version={{.Version}}
-      - -X github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/version.Commit={{.Commit}}
-      - -X github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/version.BuildDate={{.Date}}
+      - -X github.com/Nexora-NHI/nexora-cli/internal/version.Version={{.Version}}
+      - -X github.com/Nexora-NHI/nexora-cli/internal/version.Commit={{.Commit}}
+      - -X github.com/Nexora-NHI/nexora-cli/internal/version.BuildDate={{.Date}}
 
 archives:
   - id: nexora
@@ -50,6 +50,30 @@ signs:
       - "--yes"
     artifacts: checksum
     output: true
+
+dockers:
+  - image_templates:
+      - "ghcr.io/nexora-nhi/nexora-cli:{{ .Tag }}"
+      - "ghcr.io/nexora-nhi/nexora-cli:latest"
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.source=https://github.com/Nexora-NHI/nexora-cli"
+      - "--label=org.opencontainers.image.licenses=Apache-2.0"
+
+brews:
+  - repository:
+      owner: Nexora-NHI
+      name: homebrew-tap
+    homepage: "https://github.com/Nexora-NHI/nexora-cli"
+    description: "NHI risk scanner for GitHub Actions, Kubernetes, and IaC"
+    license: "Apache-2.0"
+    install: |
+      bin.install "nexora"
 
 changelog:
   sort: asc

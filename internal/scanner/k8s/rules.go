@@ -6,7 +6,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
+	"github.com/Nexora-NHI/nexora-cli/internal/finding"
 )
 
 func CheckClusterAdminBinding(doc *yaml.Node, filePath string) ([]finding.Finding, error) {

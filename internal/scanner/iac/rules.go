@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/redact"
+	"github.com/Nexora-NHI/nexora-cli/internal/finding"
+	"github.com/Nexora-NHI/nexora-cli/internal/redact"
 )
 
 var (

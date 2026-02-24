@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
-	iacscanner "github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/scanner/iac"
+	"github.com/Nexora-NHI/nexora-cli/internal/finding"
+	iacscanner "github.com/Nexora-NHI/nexora-cli/internal/scanner/iac"
 )
 
 var (

@@ -9,10 +9,10 @@ import (
 	"github.com/google/uuid"
 	"github.com/spf13/cobra"
 
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/bundle"
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/output"
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/version"
+	"github.com/Nexora-NHI/nexora-cli/internal/bundle"
+	"github.com/Nexora-NHI/nexora-cli/internal/finding"
+	"github.com/Nexora-NHI/nexora-cli/internal/output"
+	"github.com/Nexora-NHI/nexora-cli/internal/version"
 )
 
 var (

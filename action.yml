@@ -1,0 +1,55 @@
+name: 'Nexora NHI Scanner'
+description: 'Scan for non-human identity risks in GitHub Actions, Kubernetes, and IaC'
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  scan-type:
+    description: 'Type of scan: workflows, k8s, iac, or github'
+    required: true
+  path:
+    description: 'Path to scan (not used for github scan type)'
+    required: false
+    default: '.'
+  severity:
+    description: 'Minimum severity threshold (LOW, MEDIUM, HIGH, CRITICAL)'
+    required: false
+    default: 'MEDIUM'
+  format:
+    description: 'Output format (table, json, sarif, ocsf)'
+    required: false
+    default: 'sarif'
+  output:
+    description: 'Output file path'
+    required: false
+    default: 'nexora-results.sarif'
+  upload-sarif:
+    description: 'Automatically upload SARIF to GitHub Code Scanning'
+    required: false
+    default: 'true'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Nexora CLI
+      shell: bash
+      run: |
+        curl -sSfL https://github.com/Nexora-NHI/nexora-cli/releases/latest/download/nexora_Linux_x86_64.tar.gz | tar xz
+        sudo mv nexora /usr/local/bin/
+        nexora version
+
+    - name: Run Nexora Scan
+      shell: bash
+      run: |
+        if [ "${{ inputs.scan-type }}" = "github" ]; then
+          nexora scan github --org ${{ github.repository_owner }} --severity ${{ inputs.severity }} --format ${{ inputs.format }} --output ${{ inputs.output }}
+        else
+          nexora scan ${{ inputs.scan-type }} --path ${{ inputs.path }} --severity ${{ inputs.severity }} --format ${{ inputs.format }} --output ${{ inputs.output }}
+        fi
+
+    - name: Upload SARIF to GitHub Code Scanning
+      if: inputs.upload-sarif == 'true' && inputs.format == 'sarif'
+      uses: github/codeql-action/upload-sarif@60168efe1c415ce0f5521ea06d5c2062adbeed1b # v3
+      with:
+        sarif_file: ${{ inputs.output }}

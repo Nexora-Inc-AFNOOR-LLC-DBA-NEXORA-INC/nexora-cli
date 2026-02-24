@@ -12,8 +12,8 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/oauth2"
 
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/finding"
-	ghscanner "github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/scanner/github"
+	"github.com/Nexora-NHI/nexora-cli/internal/finding"
+	ghscanner "github.com/Nexora-NHI/nexora-cli/internal/scanner/github"
 )
 
 var (

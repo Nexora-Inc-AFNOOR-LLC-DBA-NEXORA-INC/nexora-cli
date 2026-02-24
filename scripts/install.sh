@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli"
+REPO="Nexora-NHI/nexora-cli"
 BINARY="nexora"
 INSTALL_DIR="${INSTALL_DIR:-/usr/local/bin}"
 

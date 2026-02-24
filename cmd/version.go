@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/internal/version"
+	"github.com/Nexora-NHI/nexora-cli/internal/version"
 )
 
 var versionCmd = &cobra.Command{

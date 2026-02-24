@@ -35,7 +35,7 @@ formatters:
   settings:
     goimports:
       local-prefixes:
-        - github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli
+        - github.com/Nexora-NHI/nexora-cli
 
 issues:
   max-issues-per-linter: 0

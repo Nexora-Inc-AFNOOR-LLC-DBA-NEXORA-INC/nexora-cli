@@ -1,4 +1,4 @@
-module github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli
+module github.com/Nexora-NHI/nexora-cli
 
 go 1.24.0
 

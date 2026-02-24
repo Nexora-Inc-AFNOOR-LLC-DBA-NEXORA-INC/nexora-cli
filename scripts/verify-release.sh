@@ -5,7 +5,7 @@ set -euo pipefail
 # Usage: ./scripts/verify-release.sh <version> <artifact>
 # Example: ./scripts/verify-release.sh v0.1.0 nexora_0.1.0_linux_amd64.tar.gz
 
-REPO="Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli"
+REPO="Nexora-NHI/nexora-cli"
 VERSION="${1:-}"
 ARTIFACT="${2:-}"
 

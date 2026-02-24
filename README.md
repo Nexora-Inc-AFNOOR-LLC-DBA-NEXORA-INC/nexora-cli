@@ -1,5 +1,10 @@
 # nexora-cli
 
+[![CI](https://github.com/Nexora-NHI/nexora-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/Nexora-NHI/nexora-cli/actions/workflows/ci.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Nexora-NHI/nexora-cli)](https://goreportcard.com/report/github.com/Nexora-NHI/nexora-cli)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/Nexora-NHI/nexora-cli)](https://github.com/Nexora-NHI/nexora-cli/releases)
+
 ![demo](demo.gif)
 
 Open-source CLI that finds Non-Human Identity (NHI) risks in GitHub Actions workflows, Kubernetes manifests, and Terraform/IaC files — before they become incidents.
@@ -21,7 +26,7 @@ It does not call home. It does not require an account. It reads files and tells 
 **macOS / Linux — pre-built binary**
 
 ```sh
-curl -sSfL https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/releases/latest/download/nexora_$(uname -s)_$(uname -m).tar.gz | tar xz
+curl -sSfL https://github.com/Nexora-NHI/nexora-cli/releases/latest/download/nexora_$(uname -s)_$(uname -m).tar.gz | tar xz
 sudo mv nexora /usr/local/bin/
 nexora version
 ```
@@ -29,13 +34,13 @@ nexora version
 **Go install**
 
 ```sh
-go install github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli@latest
+go install github.com/Nexora-NHI/nexora-cli@latest
 ```
 
 **Build from source**
 
 ```sh
-git clone https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli.git
+git clone https://github.com/Nexora-NHI/nexora-cli.git
 cd nexora-cli
 make build
 ```
@@ -155,7 +160,7 @@ jobs:
 
       - name: Install nexora-cli
         run: |
-          curl -sSfL https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/releases/latest/download/nexora_Linux_x86_64.tar.gz | tar xz
+          curl -sSfL https://github.com/Nexora-NHI/nexora-cli/releases/latest/download/nexora_Linux_x86_64.tar.gz | tar xz
           sudo mv nexora /usr/local/bin/
 
       - name: Scan workflows

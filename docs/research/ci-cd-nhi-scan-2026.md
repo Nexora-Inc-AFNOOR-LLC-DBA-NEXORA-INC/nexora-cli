@@ -140,7 +140,7 @@ ansible/ansible and kubernetes/kubernetes were in the original list but their wo
 
 ```bash
 # install
-curl -sSfL https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli/releases/latest/download/nexora_$(uname -s)_$(uname -m).tar.gz | tar xz
+curl -sSfL https://github.com/Nexora-NHI/nexora-cli/releases/latest/download/nexora_$(uname -s)_$(uname -m).tar.gz | tar xz
 sudo mv nexora /usr/local/bin/
 
 # scan your workflows
@@ -160,4 +160,4 @@ For the full list of rules and what each one catches, see the [README](../../REA
 
 Open-source CLI built by [Nexora](https://nexora.inc). Apache 2.0 licensed. The CLI is the detection layer for a commercial platform that adds autonomous remediation and post-quantum cryptography for enterprise machine identity management. The CLI will always be free.
 
-[GitHub](https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli)
+[GitHub](https://github.com/Nexora-NHI/nexora-cli)

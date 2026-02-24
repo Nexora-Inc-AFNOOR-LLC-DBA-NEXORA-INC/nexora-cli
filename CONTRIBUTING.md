@@ -3,7 +3,7 @@
 ## Getting Started
 
 ```sh
-git clone https://github.com/Nexora-Inc-AFNOOR-LLC-DBA-NEXORA-INC/nexora-cli.git
+git clone https://github.com/Nexora-NHI/nexora-cli.git
 cd nexora-cli
 go mod tidy
 make test
