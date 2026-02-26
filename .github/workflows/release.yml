@@ -15,7 +15,6 @@ jobs:
       contents: write
       id-token: write
       packages: write
-      attestations: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -50,8 +49,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COSIGN_EXPERIMENTAL: "1"
           HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
-
-      - name: Attest build provenance
-        uses: actions/attest-build-provenance@c4fbc648846ca6f503a13a7e8917b6b1d3e1d323 # v2.3.0
-        with:
-          subject-path: dist/nexora_*
