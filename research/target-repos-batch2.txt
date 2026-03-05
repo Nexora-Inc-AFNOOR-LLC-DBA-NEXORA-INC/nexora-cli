@@ -1,0 +1,29 @@
+# Batch 2 Target Repos for CI/CD Machine Identity Risk Research
+# Criteria: 1000+ stars, active GitHub Actions usage, not in original batch
+# Original batch: vercel/next.js, facebook/react, microsoft/vscode, django/django, fastapi/fastapi, 
+#                 prometheus/prometheus, grafana/grafana, hashicorp/terraform, cert-manager/cert-manager,
+#                 argoproj/argo-cd, open-policy-agent/opa, aquasecurity/trivy, sigstore/cosign,
+#                 goreleaser/goreleaser, helm/helm, crossplane/crossplane, fluxcd/flux2, tektoncd/pipeline
+
+# Infrastructure & Cloud Native
+traefik/traefik
+envoyproxy/envoy
+istio/istio
+containerd/containerd
+etcd-io/etcd
+
+# Security & DevSecOps
+anchore/grype
+aquasecurity/tfsec
+bridgecrewio/checkov
+trufflesecurity/trufflehog
+
+# CI/CD & Automation
+actions/runner
+nektos/act
+github/super-linter
+
+# Developer Tools
+golangci/golangci-lint
+swaggo/swag
+spf13/cobra
