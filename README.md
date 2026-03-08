@@ -7,10 +7,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/Nexora-NHI/nexora-cli)](https://github.com/Nexora-NHI/nexora-cli/releases)
 
-![demo](demo.gif)
-
-> **Note:** Demo shows `scan` command. `audit` and `map` commands are new additions not yet in the demo.
-
 ---
 
 ## What Makes This Different

@@ -1,18 +1,28 @@
 Output demo.gif
-Set FontSize 14
-Set Width 1200
-Set Height 600
+Set FontSize 13
+Set Width 1400
+Set Height 700
 Set Theme "Dracula"
 Set Padding 20
 
-Type "nexora scan iac --path ./fixtures/vulnerable --format table"
+Type "# nexora-cli - The only NHI scanner that audits lifecycle, not just config"
+Enter
+Sleep 1s
+
+Type "# 1. Static Analysis (like other scanners)"
+Enter
+Type "nexora scan workflows --path ./fixtures/vulnerable"
+Enter
+Sleep 3s
+
+Type "# 2. Credential Lifecycle Audit (UNIQUE - no other scanner does this)"
+Enter
+Type "./scripts/demo-audit.sh"
 Enter
 Sleep 4s
 
-Type "nexora scan k8s --path ./fixtures/vulnerable --format table"
+Type "# 3. Identity Relationship Mapping (UNIQUE - blast radius analysis)"
 Enter
-Sleep 4s
-
-Type "nexora scan workflows --path ./fixtures/vulnerable --format table"
+Type "./scripts/demo-map.sh"
 Enter
 Sleep 4s
