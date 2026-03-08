@@ -5,6 +5,8 @@ Set Height 700
 Set Theme "Dracula"
 Set Padding 20
 
+# Demo showcasing scan, audit, and map commands
+
 Type "# nexora-cli - The only NHI scanner that audits lifecycle, not just config"
 Enter
 Sleep 1s
