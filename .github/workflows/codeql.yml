@@ -21,10 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
-      - uses: github/codeql-action/init@1b549b9259bda1cb5ddde3b41741a82a2d15a841
+      - uses: github/codeql-action/init@0d579ffd059c29b07949a3cce3983f0780820c98
         with:
           languages: go
 
-      - uses: github/codeql-action/autobuild@1b549b9259bda1cb5ddde3b41741a82a2d15a841
+      - uses: github/codeql-action/autobuild@0d579ffd059c29b07949a3cce3983f0780820c98
 
-      - uses: github/codeql-action/analyze@1b549b9259bda1cb5ddde3b41741a82a2d15a841
+      - uses: github/codeql-action/analyze@0d579ffd059c29b07949a3cce3983f0780820c98
